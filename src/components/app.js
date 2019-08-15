@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+ } from "react-router-dom";
+
 import Signin from './auth/signin';
+import Signup from './auth/signup';
 import Home from './pages/home';
-import Navigation from './navigation/navigation'
+import Navigation from './navigation/navigation';
+import NoMatch from "./pages/no-match"
+
 export default class App extends Component {
-  constructor(){
-    super();
-    this.state={
-      pageTitle: "Welcome to xZero",
-      navigation:[
-        {title: 'Home' , link:'home/'},
-        {title: 'About' , link:'about/'},
-        {title: 'Contact' , link:'contact/'}
-      ]
-    }
-  }
-  navitems(){
-    return this.state.navigation.map(item=>{
-      return <Navigation title = {item.title} url = {item.link}/>
-    })
-  }
+  
   render() {
     return (
       <div className='app'>
-        <h1>xZero</h1>
-        <Signin />
-        <Home />
-       {this.navitems()}
+       <Router>
+         <div>
+           {/*this.navitems()*/}
+           <Navigation />
+           <Switch>
+            <Route exact path = "/" component={Home} />
+             <Route path = "/signin" component={Signin} />
+             <Route path = "/signup" component={Signup} />
+             <Route component={NoMatch} />
+           </Switch>
+         </div>
+       </Router>
+
       </div>
     );
   }
